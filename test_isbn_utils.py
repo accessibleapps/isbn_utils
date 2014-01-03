@@ -1,0 +1,16 @@
+import isbn_utils
+
+def test_isbn10_valid():
+ assert isbn_utils.isbn10_valid('074348858X') == True
+ assert isbn_utils.isbn10_valid('0743488589') == False
+ assert isbn_utils.isbn10_valid('XXXXXXXXXX') == False
+ assert isbn_utils.isbn10_valid('test') == False
+
+def test_isbn13_valid():
+ assert isbn_utils.isbn13_valid('9780743488587') == True
+assert isbn_utils.isbn13_valid('test') == False
+
+def test_find_isbn_in_text():
+ assert isbn_utils.find_isbn_in_text('ISBN: 074348858X') == '074348858X'
+ assert isbn_utils.find_isbn_in_text('ISBN: 0743488589') is None
+ assert isbn_utils.find_isbn_in_text('ISBN: 978-0743488587') == '9780743488587'
