@@ -10,6 +10,13 @@ def test_isbn13_valid():
  assert isbn_utils.isbn13_valid('9780743488587') == True
 assert isbn_utils.isbn13_valid('test') == False
 
+def test_isbn_valid():
+ assert isbn_utils.isbn_valid('074348858X')
+ assert isbn_utils.isbn_valid('9780743488587')
+ assert not isbn_utils.isbn_valid(None)
+ assert not isbn_utils.isbn_valid('test')
+
+
 def test_find_isbn_in_text():
  assert isbn_utils.find_isbn_in_text('ISBN: 074348858X') == '074348858X'
  assert isbn_utils.find_isbn_in_text('ISBN: 0743488589') is None
