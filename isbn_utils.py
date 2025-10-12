@@ -1,8 +1,9 @@
 import re
 import string
+from typing import Optional
 
 
-def isbn10_valid(isbn):
+def isbn10_valid(isbn: str) -> bool:
     sum = 0
     for i, digit in enumerate(isbn):
         if digit in ("x", "X"):
@@ -17,7 +18,7 @@ def isbn10_valid(isbn):
     return sum % 11 == 0
 
 
-def isbn13_valid(isbn):
+def isbn13_valid(isbn: str) -> bool:
     for digit in isbn:
         if digit not in string.digits:
             return False
@@ -25,11 +26,11 @@ def isbn13_valid(isbn):
     return check == int(isbn[-1])
 
 
-def clean_isbn(isbn):
+def clean_isbn(isbn: str) -> str:
     return isbn.lower().replace("-", "").replace("urn:isbn:", "").upper()
 
 
-def isbn_valid(isbn):
+def isbn_valid(isbn: Optional[str]) -> bool:
     if isbn is None:
         return False
     isbn = clean_isbn(isbn)
@@ -44,7 +45,7 @@ def isbn_valid(isbn):
 isbn_re = re.compile("([-0-9xX]+)")
 
 
-def find_isbn_in_text(text):
+def find_isbn_in_text(text: str) -> Optional[str]:
     for match in isbn_re.finditer(text):
         if isbn_valid(match.group(1)):
             return clean_isbn(match.group(1))

@@ -52,6 +52,12 @@ ignore = [
 known-first-party = ["isbn_utils"]
 
 [tool.pyright]
+include = ["*.py"]
+exclude = [
+    "**/__pycache__",
+    ".git",
+    ".venv",
+]
 pythonVersion = "3.8"
 typeCheckingMode = "strict"
 reportUnusedImport = "warning"
@@ -66,7 +72,3 @@ reportUnknownVariableType = false
 reportPrivateUsage = "warning"
 reportConstantRedefinition = "error"
 reportIncompatibleVariableOverride = "error"
-exclude = [
-    "**/__pycache__",
-    ".git",
-]
