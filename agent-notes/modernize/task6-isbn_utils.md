@@ -61,6 +61,31 @@ permissions or security settings; retain that limitation in the private report.
 
 # Next step
 
-Commit the four named task files, excluding generated caches, uv.lock and
-environment. Return exact head/diff/results and concise PR text for coordinator
-review before publication. No hosted authority exists for this repository.
+The hosted CI prerequisite #2 was merged at
+99ae1d0ef945fbf422d3aa0da2f2e4bc8f9c8cc2. Its exact-head push workflow passed:
+https://github.com/accessibleapps/isbn_utils/actions/runs/39517361313.
+Fresh origin/master was verified at that merge. Original published #1 tip
+4fd7ab3739bc3c531f494dee2ee17e7a7cccc3fd and original local note-only-ahead tip
+47bf7690eea6fc2b05e36237e3caf2536613b440 are separately retained under
+archive/task6-isbn_utils-before-ci-published and
+archive/task6-isbn_utils-before-ci-local. Original worktree, untracked uv.lock
+and caches are untouched.
+
+The isolated branch repair/task6-isbn_utils-feature-ci was created at the
+published tip and rebased with --no-update-refs onto the verified merge; the
+rebased feature commit is e273270026744c377d5e9be167e7c5509661dcb0. Its original
+source/test/dev-dependency diff is unchanged. The subsequent CI amendment adds
+only a Python 3.8/3.13 matrix and replaces the three fixed 3.12 interpreter
+selections with the matrix value. This covers the declared >=3.8 minimum and
+the coordinator-requested newer runtime without changing support metadata.
+Other Python versions and non-Linux platforms are not established by this
+matrix. Workflow audits are allowed locally; full tests/build will run on the
+published PR after coordinator review, with no local full-CI rerun. actionlint
+1.7.12 passed; offline zizmor 1.31.1 reported no findings (three default
+suppressions). Product source/test/manifest files have no diff against the
+preserved published feature tip.
+
+Return complete local diff and exact head for coordinator review before any
+publication. Actual Claude review and hosted green checks must cover the final
+published feature head before merge. No original branch update is authorized
+by this local preparation alone.
