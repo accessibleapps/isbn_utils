@@ -1,18 +1,24 @@
 # Goal
 
 Reject incorrect lengths in the existing public ISBN-10 and ISBN-13 validators.
-Smallest slice: two length guards (four source lines), about 20 regression lines
-in the existing test file, no dependency or consumer changes.
+The feature adds two length guards (four source lines), regressions in the
+existing test file and the authorized pytest>=8.3.5 development dependency.
+This follow-up only corrects one long-input fixture and updates this note;
+no product source, API, dependency, workflow or support change.
 
 # State
 
-Worker thread `01a15b46-3e8d-756c-aae8-81ec4de0103c`.
-Origin `git@github.com:accessibleapps/isbn_utils.git`, fresh master/base
-`235e22dfcacac5ec8d8b55ee5f9395706af627bf`. Non-archived/non-fork,
-authenticated ctoth/admin; no open PRs. Isolated branch
-`modernize/task6-isbn_utils` in task-root worktrees/isbn_utils.
-Canonical checkout remains untouched; its untracked uv.lock is preserved.
-No repo or nested AGENTS/CLAUDE/skills/task-note guidance exists.
+Origin `git@github.com:accessibleapps/isbn_utils.git`; open draft PR #1 is
+published at 18081494e23071d5f429a1cf8f20e498f6b9cba5. Its base is landed CI
+prerequisite #2 at 99ae1d0ef945fbf422d3aa0da2f2e4bc8f9c8cc2. That feature
+head's hosted Python 3.8/3.13 tests and package builds passed in run
+39517940869. No tracked lock exists; the pytest dev declaration is present.
+
+This isolated follow-up branch repair/task6-isbn-utils-fixture starts from
+that exact published head. Separate archive/task6-isbn-utils-fixture-local
+and archive/task6-isbn-utils-fixture-published refs preserve it. Original
+worktrees and the earlier note-only-ahead 47bf7690eea6fc2b05e36237e3caf2536613b440
+tip/archive remain untouched, including canonical untracked uv.lock/caches.
 
 # Decisions and why
 
@@ -23,10 +29,11 @@ indexes the last character without first establishing the required length.
 Use existing exact valid README/test examples and malformed lengths; preserve
 all valid inputs, normalization and checksum algorithms.
 README documents uv run pytest, uv run pyright and uv run ruff check.
-No hosted workflow or tracked lock exists. Coordinator authorizes the existing
-relevant full checks once locally when hosted CI is absent.
+The hosted workflow now runs the existing pytest suite and package build on
+Python 3.8 and 3.13/Linux; no tracked lock exists. Historical local checks below
+were authorized before that CI prerequisite landed, not rerun for this follow-up.
 
-Supported-environment red proof: uv run pytest -q test_isbn_utils.py reproduced
+Original supported-environment red proof: uv run pytest -q test_isbn_utils.py reproduced
 7 failed / 5 passed before guards, using the newly declared pytest8.3.5.
 After guards, full uv run pytest passes12 tests on Python3.8.20/pytest8.3.5
 (0.04s) and Python3.13.15/pytest9.1.1 (0.14s). Full uv run pyright reports
@@ -51,8 +58,8 @@ then 12 passed), not supported-command evidence. Coordinator authorized one
 pytest dev declaration to make the existing README command reproducible.
 Primary PyPI JSON metadata: pytest 8.3.5 requires Python >=3.8, 8.4.0 >=3.9,
 9.0.1 >=3.10. Declare >=8.3.5 so uv retains older-Python compatibility while
-allowing current pytest on newer interpreters. Add one manifest line;
-no tracked lock exists, so do not commit the generated local
+allowing current pytest on newer interpreters. That manifest line is already
+present; no tracked lock exists, so do not commit the generated local
 lock or environment. Reverted only this worker's four guard lines before
 reproducing red under the corrected supported test environment.
 Pytest cannot update its task-generated cache due mixed sandbox/Q ownership;
@@ -61,31 +68,20 @@ permissions or security settings; retain that limitation in the private report.
 
 # Next step
 
-The hosted CI prerequisite #2 was merged at
-99ae1d0ef945fbf422d3aa0da2f2e4bc8f9c8cc2. Its exact-head push workflow passed:
-https://github.com/accessibleapps/isbn_utils/actions/runs/39517361313.
-Fresh origin/master was verified at that merge. Original published #1 tip
-4fd7ab3739bc3c531f494dee2ee17e7a7cccc3fd and original local note-only-ahead tip
-47bf7690eea6fc2b05e36237e3caf2536613b440 are separately retained under
-archive/task6-isbn_utils-before-ci-published and
-archive/task6-isbn_utils-before-ci-local. Original worktree, untracked uv.lock
-and caches are untouched.
+The prior 14-digit fixture 97807434885870 already returned False on the
+baseline: its final 0 differs from the computed check digit 7. The corrected
+97807434885877 is wrongly accepted by that baseline and rejected by the
+existing exact-length guard, so it exercises the long-input regression.
 
-The isolated branch repair/task6-isbn_utils-feature-ci was created at the
-published tip and rebased with --no-update-refs onto the verified merge; the
-rebased feature commit is e273270026744c377d5e9be167e7c5509661dcb0. Its original
-source/test/dev-dependency diff is unchanged. The subsequent CI amendment adds
-only a Python 3.8/3.13 matrix and replaces the three fixed 3.12 interpreter
-selections with the matrix value. This covers the declared >=3.8 minimum and
-the coordinator-requested newer runtime without changing support metadata.
-Other Python versions and non-Linux platforms are not established by this
-matrix. Workflow audits are allowed locally; full tests/build will run on the
-published PR after coordinator review, with no local full-CI rerun. actionlint
-1.7.12 passed; offline zizmor 1.31.1 reported no findings (three default
-suppressions). Product source/test/manifest files have no diff against the
-preserved published feature tip.
+On Python 3.12/pytest 8.3.5, baseline source loaded directly from 99ae1d0e
+in memory returned False for the old fixture and True for the replacement.
+The edited long-input test case failed against that baseline (1 failed in
+0.42s), then the complete actively edited test file passed against unchanged
+guarded source (12 passed in 0.05s). No full local CI or build was run.
 
-Return complete local diff and exact head for coordinator review before any
-publication. Actual Claude review and hosted green checks must cover the final
-published feature head before merge. No original branch update is authorized
-by this local preparation alone.
+Return this complete two-file diff/head for coordinator review before a
+guarded update to the already-published PR. Fresh actual Claude review and
+green hosted results must cover the final published head before merge.
+No model calls, comments/descriptions, merge, full local CI or unrelated
+changes are authorized here. The unchanged CI covers Linux on Python 3.8 and
+3.13; other runtimes/platforms remain outside that hosted evidence.

@@ -19,7 +19,7 @@ def test_isbn10_rejects_incorrect_length(isbn: str) -> None:
     assert not isbn_utils.isbn10_valid(isbn)
 
 
-@pytest.mark.parametrize("isbn", ["", "0", "000000000000", "97807434885870"])
+@pytest.mark.parametrize("isbn", ["", "0", "000000000000", "97807434885877"])
 def test_isbn13_rejects_incorrect_length(isbn: str) -> None:
     assert not isbn_utils.isbn13_valid(isbn)
 
