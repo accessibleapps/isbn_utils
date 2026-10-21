@@ -4,6 +4,8 @@ from typing import Optional
 
 
 def isbn10_valid(isbn: str) -> bool:
+    if len(isbn) != 10:
+        return False
     sum = 0
     for i, digit in enumerate(isbn):
         if digit in ("x", "X"):
@@ -19,6 +21,8 @@ def isbn10_valid(isbn: str) -> bool:
 
 
 def isbn13_valid(isbn: str) -> bool:
+    if len(isbn) != 13:
+        return False
     for digit in isbn:
         if digit not in string.digits:
             return False
